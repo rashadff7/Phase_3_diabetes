@@ -1,0 +1,44 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
+# Step 2: Load the dataset 
+df = pd.read_csv('/kaggle/input/diabetes-data-set/diabetes.csv')
+
+# Step 3: Data Cleaning
+
+# Check for Missing Values
+missing_values = df.isnull().sum()
+print("Missing Values:")
+print(missing_values)
+
+# Handle missing values (if any)
+mean_fill = df.mean()
+df.fillna(mean_fill, inplace=True)
+
+# Check for Duplicate Rows
+duplicate_rows = df[df.duplicated()]
+print("\nDuplicate Rows:")
+print(duplicate_rows)
+
+# Handle duplicate rows (if any)
+df.drop_duplicates(inplace=True)
+
+# Step 4: Data Analysis
+
+# Summary Statistics
+summary_stats = df.describe()
+print("\nSummary Statistics:")
+print(summary_stats)
+
+# Class Distribution 
+class_distribution = df['Outcome'].value_counts()
+print("\nClass Distribution:")
+print(class_distribution)
+
+# Step 5: Data Visualization 
+sns.pairplot(df, hue='Outcome')
+plt.show()
